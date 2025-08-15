@@ -1,0 +1,24 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Almarai:wght@400;700&display=swap');
+
+/* Font face definitions for web */
+@font-face {
+  font-family: 'Anton';
+  src: url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Almarai';
+  src: url('https://fonts.googleapis.com/css2?family=Almarai:wght@400&display=swap');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Almarai-Bold';
+  src: url('https://fonts.googleapis.com/css2?family=Almarai:wght@700&display=swap');
+  font-weight: 700;
+  font-style: normal;
+}
