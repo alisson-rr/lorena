@@ -15,9 +15,9 @@ export default function NewLogo({ width = 137, height = 22 }: NewLogoProps) {
         {
           width,
           height,
+          resizeMode: 'contain',
         },
       ]}
-      resizeMode="contain"
     />
   );
 }

@@ -17,6 +17,8 @@ import FlowerIcon from '../components/icons/FlowerIcon';
 import StarIcon from '../components/icons/StarIcon';
 import LogoutIcon from '../components/icons/LogoutIcon';
 import Sidebar from '../components/Sidebar';
+import PrivacyTermsBottomSheet from '../components/PrivacyTermsBottomSheet';
+import EditChildProfilesBottomSheet from '../components/EditChildProfilesBottomSheet';
 import { useAppNavigation, ProfileScreenNavigationProp } from '../hooks/useAppNavigation';
 
 interface ChildProfile {
@@ -29,6 +31,8 @@ interface ChildProfile {
 export default function ProfileScreen() {
   const navigation = useAppNavigation<ProfileScreenNavigationProp>();
   const [sidebarVisible, setSidebarVisible] = useState(false);
+  const [privacyBottomSheetVisible, setPrivacyBottomSheetVisible] = useState(false);
+  const [editProfilesBottomSheetVisible, setEditProfilesBottomSheetVisible] = useState(false);
 
   const childProfiles: ChildProfile[] = [
     { id: '1', name: 'Antônia', icon: 'flower', color: '#AB4766' },
@@ -38,8 +42,8 @@ export default function ProfileScreen() {
   const menuItems = [
     { label: 'Minha Conta', onPress: () => navigation.navigate('MyAccount') },
     { label: 'Histórico', onPress: () => navigation.navigate('History') },
-    { label: 'Editar Perfis Infantis', onPress: () => console.log('Editar Perfis') },
-    { label: 'Privacidade e Termos', onPress: () => console.log('Privacidade') },
+    { label: 'Editar Perfis Infantis', onPress: () => setEditProfilesBottomSheetVisible(true) },
+    { label: 'Privacidade e Termos', onPress: () => setPrivacyBottomSheetVisible(true) },
   ];
 
   return (
@@ -55,6 +59,18 @@ export default function ProfileScreen() {
       <Sidebar 
         visible={sidebarVisible}
         onClose={() => setSidebarVisible(false)}
+      />
+      
+      {/* Privacy Terms Bottom Sheet */}
+      <PrivacyTermsBottomSheet 
+        visible={privacyBottomSheetVisible}
+        onClose={() => setPrivacyBottomSheetVisible(false)}
+      />
+      
+      {/* Edit Child Profiles Bottom Sheet */}
+      <EditChildProfilesBottomSheet 
+        visible={editProfilesBottomSheetVisible}
+        onClose={() => setEditProfilesBottomSheetVisible(false)}
       />
       
       {/* Header */}

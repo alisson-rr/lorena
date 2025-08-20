@@ -16,6 +16,16 @@ export const HOME_GRADIENT = {
   locations: [0, 1],
 };
 
+// Gradiente roxo claro para a KidsHomeScreen
+export const KIDS_HOME_GRADIENT = {
+  colors: ['#EAE2F6', '#EAE2F6'],
+  start: { x: 0, y: 0 },
+  end: { x: 0, y: 1 },
+  locations: [0, 1],
+};
+
+
+
 // Componente de gradiente reutilizável
 export { LinearGradient };
 

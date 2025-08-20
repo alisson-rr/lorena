@@ -46,7 +46,7 @@ export default function SplashScreen({ onFinish }: SplashScreenProps) {
     <ImageBackground
       source={require('../../assets/BG_Splash.png')}
       style={styles.container}
-      resizeMode="cover"
+      imageStyle={styles.backgroundImage}
     >
       {/* Logo Container */}
       <View style={styles.logoContainer}>
@@ -71,6 +71,9 @@ const styles = StyleSheet.create({
     flex: 1,
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT,
+  },
+  backgroundImage: {
+    resizeMode: 'cover',
   },
   logoContainer: {
     flex: 1,

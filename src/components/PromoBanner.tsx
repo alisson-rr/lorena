@@ -39,7 +39,7 @@ export default function PromoBanner({
       >
         <View style={styles.content}>
           <Text style={styles.title}>{title}</Text>
-          <Image source={{ uri: image }} style={styles.image} />
+          <Image source={{ uri: image }} style={styles.image} resizeMode="contain" />
         </View>
       </LinearGradient>
     </TouchableOpacity>
@@ -75,6 +75,5 @@ const styles = StyleSheet.create({
   image: {
     width: 140,
     height: 160,
-    resizeMode: 'contain',
   },
 });

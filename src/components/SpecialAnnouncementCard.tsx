@@ -65,7 +65,6 @@ const styles = StyleSheet.create({
   },
   image: {
     borderRadius: 16,
-    resizeMode: 'cover',
   },
   gradient: {
     flex: 1,

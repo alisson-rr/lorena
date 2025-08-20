@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { RootStackParamList } from './types';
+import { ProfileProvider } from '../context/ProfileContext';
 
 // Splash Screen
 import SplashScreen from '../screens/SplashScreen';
@@ -11,13 +12,16 @@ import WelcomeScreen from '../screens/WelcomeScreen';
 import LoginScreen from '../screens/LoginScreen';
 import SignUpScreen from '../screens/SignUpScreen';
 import LeadDataScreen from '../screens/LeadDataScreen';
-import MissingDataScreen from '../screens/MissingDataScreen';
+
 import SetPasswordScreen from '../screens/SetPasswordScreen';
 import ProfileSelectionScreen from '../screens/ProfileSelectionScreen';
 import ForgotPasswordSuccessScreen from '../screens/ForgotPasswordSuccessScreen';
+import EditChildProfileScreen from '../screens/EditChildProfileScreen';
+import AddChildProfileScreen from '../screens/AddChildProfileScreen';
+import KidsBlockScreen from '../screens/KidsBlockScreen';
 
 // Main Navigation
-import BottomTabNavigator from './BottomTabNavigator';
+import ConditionalBottomTabNavigator from './ConditionalBottomTabNavigator';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -36,29 +40,39 @@ export default function RootNavigator() {
   }
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator 
-        screenOptions={{ 
-          headerShown: false,
-          cardStyle: { backgroundColor: '#F1E1DD' }
-        }}
-      >
-        {!isAuthenticated ? (
-          <>
-            <Stack.Screen name="Welcome" component={WelcomeScreen} />
-            <Stack.Screen name="Login" component={LoginScreen} />
-            <Stack.Screen name="SignUp" component={SignUpScreen} />
-            <Stack.Screen name="LeadData" component={LeadDataScreen} />
-            <Stack.Screen name="MissingData" component={MissingDataScreen} />
-            <Stack.Screen name="SetPassword" component={SetPasswordScreen} />
-            <Stack.Screen name="ProfileSelection" component={ProfileSelectionScreen} />
-            <Stack.Screen name="ForgotPasswordSuccess" component={ForgotPasswordSuccessScreen} />
-            <Stack.Screen name="MainTabs" component={BottomTabNavigator} />
+    <ProfileProvider>
+      <NavigationContainer>
+        <Stack.Navigator 
+          screenOptions={{ 
+            headerShown: false,
+            cardStyle: { backgroundColor: '#F1E1DD' }
+          }}
+        >
+          {!isAuthenticated ? (
+            <>
+              <Stack.Screen name="Welcome" component={WelcomeScreen} />
+              <Stack.Screen name="Login" component={LoginScreen} />
+              <Stack.Screen name="SignUp" component={SignUpScreen} />
+              <Stack.Screen name="LeadData" component={LeadDataScreen} />
+
+              <Stack.Screen name="SetPassword" component={SetPasswordScreen} />
+              <Stack.Screen name="ProfileSelection" component={ProfileSelectionScreen} />
+              <Stack.Screen name="ForgotPasswordSuccess" component={ForgotPasswordSuccessScreen} />
+              <Stack.Screen name="EditChildProfile" component={EditChildProfileScreen} />
+              <Stack.Screen name="AddChildProfile" component={AddChildProfileScreen} />
+              <Stack.Screen name="KidsBlock" component={KidsBlockScreen} />
+              <Stack.Screen name="MainTabs" component={ConditionalBottomTabNavigator} />
           </>
         ) : (
-          <Stack.Screen name="MainTabs" component={BottomTabNavigator} />
-        )}
-      </Stack.Navigator>
-    </NavigationContainer>
+          <>
+            <Stack.Screen name="MainTabs" component={ConditionalBottomTabNavigator} />
+              <Stack.Screen name="EditChildProfile" component={EditChildProfileScreen} />
+              <Stack.Screen name="AddChildProfile" component={AddChildProfileScreen} />
+              <Stack.Screen name="KidsBlock" component={KidsBlockScreen} />
+            </>
+          )}
+        </Stack.Navigator>
+      </NavigationContainer>
+    </ProfileProvider>
   );
 }

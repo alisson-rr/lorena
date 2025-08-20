@@ -53,6 +53,16 @@ export type FeedScreenNavigationProp = CompositeNavigationProp<
   BottomTabNavigationProp<MainTabParamList>
 >;
 
+export type EditChildProfileScreenNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  'EditChildProfile'
+>;
+
+export type AddChildProfileScreenNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  'AddChildProfile'
+>;
+
 // Generic hook for navigation
 export function useAppNavigation<T = RootNavigationProp>() {
   return useNavigation<T>();

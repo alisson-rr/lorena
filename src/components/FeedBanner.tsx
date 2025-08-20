@@ -31,8 +31,7 @@ export default function FeedBanner({
       >
         <Image 
           source={{ uri: image }} 
-          style={styles.bannerImage}
-          resizeMode="cover"
+          style={[styles.bannerImage, { resizeMode: 'cover' }]}
         />
       </TouchableOpacity>
       

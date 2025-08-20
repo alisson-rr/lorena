@@ -9,25 +9,27 @@ import {
   TouchableWithoutFeedback,
   Dimensions,
   Animated,
+  Image,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import LogoutIcon from './icons/LogoutIcon';
 import { fonts, fontWeights } from '../utils/fonts';
 import { useAppNavigation } from '../hooks/useAppNavigation';
-import { Image } from 'react-native';
+import KidsExitBottomSheet from './KidsExitBottomSheet';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const SIDEBAR_WIDTH = 320; // Fixed width for sidebar
 
-interface SidebarProps {
+interface KidsSidebarProps {
   visible: boolean;
   onClose: () => void;
 }
 
-export default function Sidebar({ visible, onClose }: SidebarProps) {
+export default function KidsSidebar({ visible, onClose }: KidsSidebarProps) {
   const navigation = useAppNavigation();
   const translateX = useRef(new Animated.Value(-SIDEBAR_WIDTH)).current;
   const overlayOpacity = useRef(new Animated.Value(0)).current;
+  const [showExitBottomSheet, setShowExitBottomSheet] = useState(false);
 
   useEffect(() => {
     if (visible) {
@@ -78,14 +80,13 @@ export default function Sidebar({ visible, onClose }: SidebarProps) {
     });
   };
 
-  const handleProfilePress = () => {
-    onClose();
-    navigation.navigate('Profile');
+  const handleLogout = () => {
+    setShowExitBottomSheet(true);
   };
 
-  const handleLogout = () => {
-    console.log('Logout pressed from sidebar...');
-    // Implementar lógica de logout
+  const handleConfirmExit = () => {
+    console.log('Exiting kids profile from sidebar...');
+    // Implementar lógica de saída do perfil kids
     onClose();
   };
 
@@ -104,7 +105,7 @@ export default function Sidebar({ visible, onClose }: SidebarProps) {
                 {/* Header */}
                 <View style={styles.header}>
                   <Image 
-                    source={require('../../public/LogoBranco.png')}
+                    source={require('../../public/logo_kids_white.png')}
                     style={styles.logo}
                     resizeMode="contain"
                   />
@@ -144,9 +145,7 @@ export default function Sidebar({ visible, onClose }: SidebarProps) {
                   
                   {/* User Section */}
                   <View style={styles.userSection}>
-                    <TouchableOpacity onPress={handleProfilePress}>
-                      <Text style={styles.userName}>Mariana</Text>
-                    </TouchableOpacity>
+                    <Text style={styles.userName}>Antônia</Text>
                     <TouchableOpacity 
                       style={styles.logoutButton}
                       onPress={handleLogout}
@@ -162,6 +161,13 @@ export default function Sidebar({ visible, onClose }: SidebarProps) {
           </TouchableWithoutFeedback>
         </Animated.View>
       </TouchableWithoutFeedback>
+      
+      {/* Kids Exit Bottom Sheet */}
+      <KidsExitBottomSheet
+        visible={showExitBottomSheet}
+        onClose={() => setShowExitBottomSheet(false)}
+        onConfirmExit={handleConfirmExit}
+      />
     </Modal>
   );
 }
@@ -174,7 +180,7 @@ const styles = StyleSheet.create({
   },
   sidebar: {
     width: SIDEBAR_WIDTH,
-    backgroundColor: '#69162B', // Cor de fundo para adulto
+    backgroundColor: '#AB4766', // Nova cor de fundo para kids
     borderTopRightRadius: 24,
     borderBottomRightRadius: 24,
     shadowColor: '#000',

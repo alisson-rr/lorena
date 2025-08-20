@@ -32,6 +32,7 @@ export default function LeadDataScreen() {
   const [state, setState] = useState('');
   const [city, setCity] = useState('');
   const [isFanClubMember, setIsFanClubMember] = useState(false);
+  const [fanClubName, setFanClubName] = useState('');
   const [genderModal, setGenderModal] = useState(false);
   const [monthModal, setMonthModal] = useState(false);
   const [yearModal, setYearModal] = useState(false);
@@ -51,9 +52,10 @@ export default function LeadDataScreen() {
       state,
       city,
       isFanClubMember,
+      fanClubName: isFanClubMember ? fanClubName : null,
     });
     // Navigate to next screen
-    navigation.navigate('MissingData');
+    navigation.navigate('SetPassword');
   };
 
   return (
@@ -182,7 +184,14 @@ export default function LeadDataScreen() {
                 {/* Fan Club Checkbox */}
                 <TouchableOpacity 
                   style={styles.checkboxRow}
-                  onPress={() => setIsFanClubMember(!isFanClubMember)}
+                  onPress={() => {
+                    const newValue = !isFanClubMember;
+                    setIsFanClubMember(newValue);
+                    // Limpa o nome do fã-clube quando desmarca o checkbox
+                    if (!newValue) {
+                      setFanClubName('');
+                    }
+                  }}
                   activeOpacity={0.7}
                 >
                   <View style={styles.checkbox}>
@@ -194,6 +203,21 @@ export default function LeadDataScreen() {
                     Faz parte de algum fã clube?
                   </Text>
                 </TouchableOpacity>
+
+                {/* Fan Club Name Input - Only visible when checkbox is checked */}
+                {isFanClubMember && (
+                  <View style={styles.inputGroup}>
+                    <Text style={styles.label}>Qual é o fã-clube?</Text>
+                    <TextInput
+                      style={styles.input}
+                      placeholder="Digite o nome do fã-clube"
+                      placeholderTextColor="#D8BFC4"
+                      value={fanClubName}
+                      onChangeText={setFanClubName}
+                      autoCapitalize="words"
+                    />
+                  </View>
+                )}
               </View>
 
               {/* Continue Button */}

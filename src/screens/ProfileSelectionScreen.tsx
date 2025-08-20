@@ -12,41 +12,81 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import LoreLogo from '../components/LoreLogo';
 import FlowerIcon from '../components/icons/FlowerIcon';
 import StarIcon from '../components/icons/StarIcon';
+import { KidsAccessBottomSheet } from '../components/KidsAccessBottomSheet';
+import { KidsTimerModal } from '../components/KidsTimerModal';
 import { fonts, fontWeights } from '../utils/fonts';
 import { RootStackParamList } from '../navigation/types';
 import { LinearGradient, PRIMARY_GRADIENT, gradientStyle } from '../styles/gradients';
+import { useProfile, Profile } from '../context/ProfileContext';
 
 type ProfileSelectionScreenNavigationProp = StackNavigationProp<RootStackParamList, 'ProfileSelection'>;
 
-interface Profile {
-  id: string;
-  name: string;
-  type: 'flower' | 'star' | 'initial';
-  color: string;
-  initial?: string;
-}
-
 export default function ProfileSelectionScreen() {
   const navigation = useNavigation<ProfileSelectionScreenNavigationProp>();
+  const { setSelectedProfile: setGlobalSelectedProfile } = useProfile();
   const [selectedProfile, setSelectedProfile] = useState<string | null>(null);
+  const [showKidsAccessModal, setShowKidsAccessModal] = useState(false);
+  const [showKidsTimerModal, setShowKidsTimerModal] = useState(false);
+  const [currentKidsProfile, setCurrentKidsProfile] = useState<Profile | null>(null);
+  const [kidsTimeLimit, setKidsTimeLimit] = useState<number | null>(null);
 
   const profiles: Profile[] = [
-    { id: '1', name: 'Antônia', type: 'flower', color: '#AB4766' },
-    { id: '2', name: 'Maria', type: 'star', color: '#AB4766' },
-    { id: '3', name: 'Mariana', type: 'initial', color: '#69162B', initial: 'M' },
+    { id: '1', name: 'Antônia', type: 'flower', color: '#AB4766', isKids: true },
+    { id: '2', name: 'Maria', type: 'star', color: '#AB4766', isKids: true },
+    { id: '3', name: 'Mariana', type: 'initial', color: '#69162B', initial: 'M', isKids: false },
   ];
 
   const handleProfileSelect = (profileId: string) => {
     setSelectedProfile(profileId);
-    // Navigate to home with selected profile
-    setTimeout(() => {
-      navigation.navigate('MainTabs');
-    }, 300);
+    
+    // Encontrar o perfil selecionado
+    const profile = profiles.find(p => p.id === profileId);
+    if (profile) {
+      if (profile.isKids) {
+        // Se é perfil infantil, mostrar modal de configuração de tempo
+        setCurrentKidsProfile(profile);
+        setShowKidsAccessModal(true);
+      } else {
+        // Se é perfil adulto, navegar diretamente
+        setGlobalSelectedProfile(profile);
+        setTimeout(() => {
+          navigation.navigate('MainTabs');
+        }, 300);
+      }
+    }
   };
 
   const handleLogout = () => {
     // Navigate back to login
     navigation.goBack();
+  };
+
+  const handleKidsAccessStart = (timeLimit: number | null) => {
+    if (currentKidsProfile) {
+      setKidsTimeLimit(timeLimit);
+      setGlobalSelectedProfile(currentKidsProfile);
+      setShowKidsAccessModal(false);
+      
+      // Mostrar modal de confirmação
+      setTimeout(() => {
+        setShowKidsTimerModal(true);
+      }, 300);
+    }
+  };
+
+  const handleKidsAccessClose = () => {
+    setShowKidsAccessModal(false);
+    setCurrentKidsProfile(null);
+    setSelectedProfile(null);
+  };
+
+  const handleKidsTimerClose = () => {
+    setShowKidsTimerModal(false);
+    
+    // Navegar para a tela principal
+    setTimeout(() => {
+      navigation.navigate('MainTabs');
+    }, 300);
   };
 
   const renderProfileIcon = (profile: Profile) => {
@@ -127,6 +167,22 @@ export default function ProfileSelectionScreen() {
         </View>
         </ScrollView>
       </SafeAreaView>
+
+      {/* Kids Access Modal */}
+      <KidsAccessBottomSheet
+        visible={showKidsAccessModal}
+        onClose={handleKidsAccessClose}
+        onStartAccess={handleKidsAccessStart}
+        childName={currentKidsProfile?.name || ''}
+      />
+
+      {/* Kids Timer Modal */}
+      <KidsTimerModal
+        visible={showKidsTimerModal}
+        onClose={handleKidsTimerClose}
+        timeRemaining={kidsTimeLimit}
+        hasTimeLimit={kidsTimeLimit !== null}
+      />
     </LinearGradient>
   );
 }

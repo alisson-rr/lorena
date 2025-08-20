@@ -6,8 +6,7 @@ export default function LoreLogo() {
     <View style={styles.container}>
       <Image 
         source={{ uri: '/horizontal.svg' }}
-        style={styles.logo}
-        resizeMode="contain"
+        style={[styles.logo, { resizeMode: 'contain' }]}
       />
     </View>
   );

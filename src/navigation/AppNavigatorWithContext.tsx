@@ -3,7 +3,7 @@ import { NavigationProvider, useNavigation } from '../context/NavigationContext'
 import WelcomeScreen from '../screens/WelcomeScreen';
 import SignUpScreen from '../screens/SignUpScreen';
 import LeadDataScreen from '../screens/LeadDataScreen';
-import MissingDataScreen from '../screens/MissingDataScreen';
+
 import SetPasswordScreen from '../screens/SetPasswordScreen';
 import HomeScreen from '../screens/HomeScreen';
 import CategoriesScreen from '../screens/CategoriesScreen';
@@ -66,17 +66,12 @@ function NavigatorContent() {
     case 'ResetPassword':
       return <ResetPasswordScreen />;
     
-    case 'MissingData':
-      return (
-        <MissingDataScreen 
-          onContinue={() => navigate('SetPassword')}
-        />
-      );
+
     
     case 'LeadData':
       return (
         <LeadDataScreen 
-          onContinue={() => navigate('MissingData')}
+          onContinue={() => navigate('SetPassword')}
         />
       );
     

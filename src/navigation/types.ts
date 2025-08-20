@@ -6,13 +6,23 @@ export type RootStackParamList = {
   Login: undefined;
   SignUp: undefined;
   LeadData: undefined;
-  MissingData: undefined;
   SetPassword: undefined;
   ProfileSelection: undefined;
   ForgotPasswordSuccess: { email: string };
   
   // Main Tab Navigator
   MainTabs: undefined;
+  
+  // Child Profile Management
+  EditChildProfile: {
+    profileId: string;
+    profileName: string;
+    profileIcon: 'flower' | 'star';
+  };
+  AddChildProfile: undefined;
+  
+  // Kids Block Screen
+  KidsBlock: undefined;
 };
 
 export type MainTabParamList = {
@@ -26,6 +36,18 @@ export type HomeStackParamList = {
   Home: undefined;
   VideoDetail: {
     videoId: string;
+    title?: string;
+    thumbnail?: string;
+    description?: string;
+  };
+  KidsVideoDetail: {
+    videoId: string;
+    title?: string;
+    thumbnail?: string;
+    description?: string;
+  };
+  KidsWebSeries: {
+    seriesId: string;
     title?: string;
     thumbnail?: string;
     description?: string;
@@ -44,6 +66,12 @@ export type CategoriesStackParamList = {
     categoryName: string;
   };
   VideoDetail: {
+    videoId: string;
+    title?: string;
+    thumbnail?: string;
+    description?: string;
+  };
+  KidsVideoDetail: {
     videoId: string;
     title?: string;
     thumbnail?: string;

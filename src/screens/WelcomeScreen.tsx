@@ -38,7 +38,7 @@ export default function WelcomeScreen() {
       <ImageBackground
         source={require('../assets/background-model.png')}
         style={styles.backgroundImage}
-        resizeMode="cover"
+        imageStyle={styles.backgroundImageStyle}
       >
         <LinearGradient
           colors={['rgba(156, 0, 226, 0)', 'rgba(156, 0, 226, 0.5)', 'rgba(156, 0, 226, 0.9)', 'rgb(156, 0, 226)']}
@@ -120,6 +120,9 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     height: '100%',
+  },
+  backgroundImageStyle: {
+    resizeMode: 'cover',
   },
   gradient: {
     flex: 1,

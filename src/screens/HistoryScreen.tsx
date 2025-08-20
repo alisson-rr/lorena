@@ -110,16 +110,13 @@ export default function HistoryScreen() {
           <Ionicons name="chevron-back" size={24} color="#69162B" />
         </TouchableOpacity>
         
-        <View style={styles.notificationContainer}>
-          <TouchableOpacity 
-            style={styles.notificationButton}
-            onPress={() => navigation.navigate('Notifications')}
-            activeOpacity={0.7}
-          >
-            <NotificationIcon />
-          </TouchableOpacity>
-          <View style={styles.notificationDot} />
-        </View>
+        <TouchableOpacity 
+          style={styles.notificationButton}
+          onPress={() => navigation.navigate('Notifications')}
+          activeOpacity={0.7}
+        >
+          <NotificationIcon />
+        </TouchableOpacity>
       </View>
 
       {/* Page Title */}
@@ -403,16 +400,5 @@ const styles = StyleSheet.create({
   navLabelActive: {
     color: '#69162B',
   },
-  notificationContainer: {
-    position: 'relative',
-  },
-  notificationDot: {
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: '#DC372A',
-  },
+
 });
